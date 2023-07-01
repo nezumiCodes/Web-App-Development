@@ -14,7 +14,9 @@ app.use(fileup());
 
 // Mount Routes
 const todoRoutes = require('./server/routes/todo');
+const userRoutes = require('./server/routes/user');
 app.use('/', todoRoutes);
+app.use('/', userRoutes);
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
