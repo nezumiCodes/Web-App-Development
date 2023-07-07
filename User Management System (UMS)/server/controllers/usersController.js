@@ -40,6 +40,7 @@ exports.add_page = (req,res) => {
 exports.add_user = (req, res) => {
     try {
         const {first_name, last_name, email, phone, position, department} = req.body;
+        console.log(req.body);
         const stmt = db.prepare(`INSERT INTO users (first_name, last_name, email, phone, position, department)
                                 VALUES (?,?,?,?,?,?)`);
         stmt.run(first_name, last_name, email, phone, position, department);

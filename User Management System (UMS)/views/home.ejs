@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+    <title>User Management System - Home</title>
+</head>
+<body>
+    <%- include('./partials/navbar') %>
+
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Comments</th>
+                <th scope="col">Status</th>
+                <th scope="col">Position</th>
+                <th scope="col">Department</th>
+                <th scope="col" class="text-end">Actions</th> 
+                <!-- Actions will allow us to edit/delete a user -->
+            </tr>
+        </thead>
+
+        <tbody>
+            <% rows.forEach((user) => { %>
+            <tr>
+                <td><%= user.first_name %></td>
+                <td><%= user.last_name %></td>
+                <td><%= user.email %></td>
+                <td><%= user.phone %></td>
+                <td><%= user.comments %></td>
+                <td><%= user.status %></td>
+                <td><%= user.position %></td>
+                <td><%= user.department %></td>
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>
+    
+</body>
+</html>

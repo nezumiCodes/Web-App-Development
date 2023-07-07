@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false}));
 
 // Set up EJS as view engine
-app.use('view engine', 'ejs');
+app.set('view engine', 'ejs');
 
 // Set up public folder (for images, stylesheets and client-side javascript)
 app.use(express.static('public'));
