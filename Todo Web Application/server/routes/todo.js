@@ -22,3 +22,5 @@ router.post('/todos/:id/priority', todoController.setPriority);
 router.post('/todos/:id/labels', todoController.setLabels);
 // Set Due Date for a task
 router.post('/todos/:id/due_date', todoController.setDueDate);
+
+module.exports = router;

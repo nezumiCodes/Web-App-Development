@@ -48,8 +48,14 @@ exports.login = (req, res) => {
         const passMatch = bcrypt.compareSync(password, user.password);
         if(!passMatch) { return res.status(401).json({error: 'Invalid password'}); }
 
-        res.session.userId = user.id; // Create user session 
-        res.json({message: 'User authenticated successfully.'});
+        console.log(user);
+        //req.session.user = user;
+        req.session.userId = user.id;
+        req.session.authorized = true;
+
+        console.log('session id', req.session.id);
+
+        res.cookie('username', user.username, {secure: true}).json({message: 'User authenticated successfully.'});
 
     });
 };
