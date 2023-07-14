@@ -10,5 +10,10 @@
 - Create and use custom middleware
 - Configure and render EJS pages
 - Conditional rendering for EJS pages
+### Setup: 
+- Open up a terminal.
+- `npm install`
+- `node app.js` or `npm start`
+
 
 
