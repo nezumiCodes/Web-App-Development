@@ -80,14 +80,12 @@ exports.edit_user = (req, res) => {
 exports.delete_user = (req, res) => {
     try {
         const user_id = req.params.id;
-        console.log(user_id);
 
         db.run(`DELETE FROM users WHERE id = ?`, [user_id], (err) => {
             const rows = this.changes;
             if(rows === 0) {
                 res.status(404).render('404');
             } else {
-                console.log('redirecting...')
                 res.status(200).redirect('/');
             }
         });
