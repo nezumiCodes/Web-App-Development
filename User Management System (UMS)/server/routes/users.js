@@ -18,6 +18,6 @@ router.put('/edit_user/:id', usersController.edit_user);
 // Route to handle the removal of a user from the UMS
 // We will NOT create a GET method to render the page, rather we will be rendering a button for 
 // each user in the frontend and call the delete endpoint when the button is clicked
-router.delete('/delete_user/:id', usersController.delete_user);
+router.get('/delete_user/:id', usersController.delete_user);
 
 module.exports = router;

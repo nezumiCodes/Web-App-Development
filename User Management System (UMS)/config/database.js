@@ -28,7 +28,28 @@ const initialData = [
       position: 'Analyst',
       department: 'Finance'
     }
-  ];
+];
+
+const initalCreds = [
+  {
+    email: 'john.doe@gmail.com',
+    password: 'johndoe', 
+    admin: true, 
+    user_id: 1 
+  }, 
+  {
+    email: 'jane.smith@gmail.com',
+    password: 'janesmith', 
+    admin: false, 
+    user_id: 2 
+  },
+  {
+    email: 'mike.johnson@gmail.com',
+    password: 'mikejohnson', 
+    admin: false, 
+    user_id: 3 
+  }
+];
 
 // Use serialize function to ensure that the table(s) are created
 // and initialized before doing any other requests.
@@ -69,10 +90,26 @@ db.serialize(() => {
                   [data.first_name, data.last_name, data.email, data.phone, data.position, data.department],
                   (err) => {
                     if (err) { return console.error(err); }
-                    console.log('Row was inserted successfully.');
+                    console.log('Row was inserted successfully (users table).');
                 });
             });
         }
+    });
+
+    db.get(`SELECT COUNT(*) AS count FROM creds`, (err, row) => {
+      if(err) {return console.error(err);}
+
+      const rowCount = row.count;
+      if(rowCount === 0) {
+        initalCreds.forEach((data) => {
+          db.run(`INSERT INTO creds (email, password, admin, user_id)
+                  VALUES (?,?,?,?)`, [data.email, data.password, data.admin, data.user_id],
+                  (err) => {
+                    if (err) { return console.error(err); }
+                    console.log('Row was inserted successfully (creds table).');
+          });
+        });
+      }
     });
         
 

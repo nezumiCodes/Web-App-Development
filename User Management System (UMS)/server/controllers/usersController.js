@@ -8,8 +8,8 @@ exports.view_all = (req, res) => {
             res.status(200).render('home', {rows});
         });
     } catch (err) {
-        res.status(500).json({error: err.message});
-        // res.status(500).render('server_error');
+        console.error(err);
+        res.status(500).render('500');
     }
 }
 
@@ -17,8 +17,7 @@ exports.view_all = (req, res) => {
 exports.search_user = (req, res) => {
     try {
         const search_term = req.body.search_term;
-        // Unfolding
-        // const {search_term} = req.body;
+
         const stmt = db.prepare(`SELECT * FROM users WHERE first_name LIKE ? OR last_name LIKE ?`);
 
         rows = stmt.run(`%${search_term}%`, `%${search_term}%`);
@@ -27,7 +26,8 @@ exports.search_user = (req, res) => {
         stmt.finalize();
 
     } catch(err) {
-        res.status(500).json({error: err.message});
+        console.error(err);
+        res.status(500).render('500');
     }
 }
 
@@ -50,7 +50,8 @@ exports.add_user = (req, res) => {
         stmt.finalize();
 
     } catch(err) {
-        res.status(500).json({error: err.message});
+        console.error(err);
+        res.status(500).render('500');
     }
 }
 
@@ -71,22 +72,29 @@ exports.edit_user = (req, res) => {
 
         stmt.finalize();
     } catch(err) {
-        res.status(500).json({error: err.message});
+        console.error(err);
+        res.status(500).render('500');
     }
 }
 
 exports.delete_user = (req, res) => {
     try {
-        const user_id = req.params.user_id;
-        const stmt = db.prepare(`DELETE FROM users WHERE id = ?`);
-        const rows = stmt.run(user_id);
-        if(rows.length === 0) {
-            res.status(404).render('page404');
-        } else {
-            res.status(200).redirect('/');
-        }
-        stmt.finalize();
+        const user_id = req.params.id;
+        console.log(user_id);
+
+        db.run(`DELETE FROM users WHERE id = ?`, [user_id], (err) => {
+            const rows = this.changes;
+            if(rows === 0) {
+                res.status(404).render('404');
+            } else {
+                console.log('redirecting...')
+                res.status(200).redirect('/');
+            }
+        });
+
+        
     } catch(err) {
-        res.status(500).json({error: err.message});
+        console.error(err);
+        res.status(500).render('500');
     }
 }

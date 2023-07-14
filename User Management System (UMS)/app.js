@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 
 const port = 5000;
 const app = express();
@@ -11,7 +12,7 @@ app.use(express.urlencoded({ extended: false}));
 app.set('view engine', 'ejs');
 
 // Set up public folder (for images, stylesheets and client-side javascript)
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Find routes file
 const routes = require('./server/routes/users.js');
