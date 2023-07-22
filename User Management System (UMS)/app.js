@@ -15,9 +15,11 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Find routes file
-const routes = require('./server/routes/users.js');
+const userRoutes = require('./server/routes/users.js');
+const credRoutes = require('./server/routes/creds.js');
 // Mount routes to the main endpoint '/'
-app.use('/', routes);
+app.use('/', userRoutes);
+app.use('/', credRoutes);
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}.`);

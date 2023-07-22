@@ -16,14 +16,12 @@ exports.view_all = (req, res) => {
 // Search a user in the UMS
 exports.search_user = (req, res) => {
     try {
-        const search_term = req.body.search_term;
+        const {keyword} = req.body; // OR: const keyword = req.body.keyword;
+        const query = `SELECT * FROM users WHERE first_name LIKE '%${keyword}%' OR last_name LIKE '%${keyword}%'`;
 
-        const stmt = db.prepare(`SELECT * FROM users WHERE first_name LIKE ? OR last_name LIKE ?`);
-
-        rows = stmt.run(`%${search_term}%`, `%${search_term}%`);
-        res.status(200).render('home', {rows});
-
-        stmt.finalize();
+        db.all(query, (err, rows) => {
+            res.render('home', {rows});
+        });
 
     } catch(err) {
         console.error(err);
@@ -34,7 +32,7 @@ exports.search_user = (req, res) => {
 
 // Render the 'add user' page
 exports.add_page = (req,res) => {
-    res.render('add-user');
+    res.render('add-user', {alert: ""});
 }
 
 exports.add_user = (req, res) => {
@@ -57,7 +55,7 @@ exports.add_user = (req, res) => {
 
 // Render the 'edit user' page
 exports.edit_page = (req, res) => {
-    res.render('edit-user');
+    res.render('edit-user', {alert: ""});
 }
 
 exports.edit_user = (req, res) => {
@@ -82,15 +80,21 @@ exports.delete_user = (req, res) => {
         const user_id = req.params.id;
 
         db.run(`DELETE FROM users WHERE id = ?`, [user_id], (err) => {
-            const rows = this.changes;
-            if(rows === 0) {
-                res.status(404).render('404');
-            } else {
-                res.status(200).redirect('/');
-            }
-        });
 
-        
+            const rows = this.changes;
+            if(rows != 0) {
+                db.run(`DELETE FROM creds WHERE user_id = ?`, [user_id], (err) => {
+                    const crows = this.changes;
+
+                    if(crows === 0) {
+                        res.status(404).render('404');
+                    } else {
+                        res.status(200).redirect('/');
+                    }
+                });
+            }
+            
+        });   
     } catch(err) {
         console.error(err);
         res.status(500).render('500');
