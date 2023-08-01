@@ -10,5 +10,7 @@ router.post('/login', credsController.login);
 router.get('/register', credsController.register_page);
 // handle register
 router.post('/register', credsController.register);
+// logout
+router.get('/logout', credsController.logout);
 
 module.exports = router;

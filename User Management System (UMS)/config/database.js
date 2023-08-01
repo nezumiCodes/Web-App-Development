@@ -31,19 +31,22 @@ const initialData = [
 ];
 
 const initalCreds = [
-  {
+  { 
+    username: 'jdoe',
     email: 'john.doe@gmail.com',
     password: 'johndoe', 
     admin: true, 
     user_id: 1 
   }, 
   {
+    username: 'jsmith',
     email: 'jane.smith@gmail.com',
     password: 'janesmith', 
     admin: false, 
     user_id: 2 
   },
   {
+    username: 'mjohnson',
     email: 'mike.johnson@gmail.com',
     password: 'mikejohnson', 
     admin: false, 
@@ -68,14 +71,24 @@ db.serialize(() => {
         )
     `);
 
+    // db.run(`
+    //         CREATE TABLE IF NOT EXISTS creds (
+    //             id INTEGER PRIMARY KEY AUTOINCREMENT,
+    //             email VARCHAR(255) NOT NULL,
+    //             password VARCHAR(255) NOT NULL,
+    //             admin BOOLEAN DEFAULT 0,
+    //             user_id INTEGER,
+    //             FOREIGN KEY (user_id) REFERENCES users(id)
+    //         )
+    // `);
+
     db.run(`
             CREATE TABLE IF NOT EXISTS creds (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
+                username VARCHAR(255) NOT NULL,
                 email VARCHAR(255) NOT NULL,
                 password VARCHAR(255) NOT NULL,
-                admin BOOLEAN DEFAULT 0,
-                user_id INTEGER,
-                FOREIGN KEY (user_id) REFERENCES users(id)
+                admin BOOLEAN DEFAULT 0
             )
     `);
 
@@ -96,14 +109,30 @@ db.serialize(() => {
         }
     });
 
+    // db.get(`SELECT COUNT(*) AS count FROM creds`, (err, row) => {
+    //   if(err) {return console.error(err);}
+
+    //   const rowCount = row.count;
+    //   if(rowCount === 0) {
+    //     initalCreds.forEach((data) => {
+    //       db.run(`INSERT INTO creds (email, password, admin, user_id)
+    //               VALUES (?,?,?,?)`, [data.email, data.password, data.admin, data.user_id],
+    //               (err) => {
+    //                 if (err) { return console.error(err); }
+    //                 console.log('Row was inserted successfully (creds table).');
+    //       });
+    //     });
+    //   }
+    // });
+
     db.get(`SELECT COUNT(*) AS count FROM creds`, (err, row) => {
       if(err) {return console.error(err);}
 
       const rowCount = row.count;
       if(rowCount === 0) {
         initalCreds.forEach((data) => {
-          db.run(`INSERT INTO creds (email, password, admin, user_id)
-                  VALUES (?,?,?,?)`, [data.email, data.password, data.admin, data.user_id],
+          db.run(`INSERT INTO creds (username, email, password, admin)
+                  VALUES (?,?,?,?)`, [data.username, data.email, data.password, data.admin],
                   (err) => {
                     if (err) { return console.error(err); }
                     console.log('Row was inserted successfully (creds table).');

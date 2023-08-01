@@ -10,6 +10,7 @@
 ### Backend
 - [x] Create `creds` table, populate it 
   - [ ] Create `creds` routes authorisation (users, admin) + users/admin views and possible actions
+  - [ ] User sessions
 - [x] Fix `/search_user` route
 - [x] Change route errors to include rendering the `500.ejs` page
 - [ ] Change action routes (edit, delete)
