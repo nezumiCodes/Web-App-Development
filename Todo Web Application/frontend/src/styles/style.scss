@@ -83,5 +83,50 @@
                 }
             }
         }
+
+        // LOGIN & REGISTER PAGES
+        .auth {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: rgb(218, 214, 207);
+            height: 40vh;
+
+            form {
+                display: flex;
+                flex-direction: column;
+                padding: 40px;
+                background-color: white;
+                width: 200px;
+                gap: 15px;
+
+                input {
+                    border: none;
+                    border-bottom: 1px solid rgb(189, 146, 78);
+                    padding: 10px;
+                }
+
+                button {
+                    padding: 10px;
+                    border: none;
+                    background-color: rgb(189, 146, 78);
+                    color: white;
+                    cursor: pointer;
+                }
+
+                span {
+                    text-align: center;
+                    font-size: 12px;
+                }
+            }
+
+            h1 {
+                font-size: 20px;
+                color: rgb(189, 146, 78);
+                margin-bottom: 20px; 
+            }
+        }
+
     }
 }

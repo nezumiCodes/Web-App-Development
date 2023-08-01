@@ -1,7 +1,11 @@
 import './styles/style.scss';
+
 import Home from './pages/Home';
 import AddTask from './pages/AddTask';
 import EditTask from './pages/EditTask';
+import Login from './pages/Login';
+import Register from './pages/Register';
+
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 // import Welcome from './components/Welcome';
@@ -35,6 +39,14 @@ const router = createBrowserRouter([
         element: <EditTask />
       }
     ]
+  },
+  {
+    path: "/register", 
+    element: <Register />
+  },
+  {
+    path: "/login",
+    element: <Login />
   }
 ]);
 
