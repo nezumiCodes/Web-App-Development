@@ -1,0 +1,16 @@
+{
+  "name": "travel-diary",
+  "version": "1.0.0",
+  "description": "The goal is to create a unique travel diary application with Node.js, Express, EJS (option 1) or React.js (option 2), OpenStreetMaps and Leaflet.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1", 
+    "start": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
