@@ -100,3 +100,23 @@ exports.delete_user = (req, res) => {
         res.status(500).render('500');
     }
 }
+
+exports.inactive_user = (req, res) => {
+    try {
+        const {user_id} = req.params;
+
+        db.run(`UPDATE users SET status = ? WHERE id = ?`,
+                ['inactive', user_id], 
+                (err) => {
+                    db.run(`SELECT email FROM users WHERE id = ?`, 
+                            [user_id], 
+                            (err, rows) => {
+                                const uemail = rows[0].email;
+                                db.run(`DELETE FROM creds WHERE email = ?`, [uemail]);
+                            });
+                });
+    } catch(err) {
+        console.error(err);
+        res.status(500).render('500');
+    }
+}
