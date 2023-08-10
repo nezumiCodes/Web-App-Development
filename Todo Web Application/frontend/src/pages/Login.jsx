@@ -15,7 +15,7 @@ function Login() {
 
   const navigate = useNavigate();
 
-  const {auth} = useContext(AuthContext);
+  // const {auth} = useContext(AuthContext);
 
   const handleChange = (e) => {
     // Spread(...) syntax allow strings and arrays to be expanded
@@ -23,16 +23,16 @@ function Login() {
     setInputs((prev) => ({ ...prev, [e.target.name] : e.target.value    }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // override the default behaviour when submitting a form
-    try {
-      await auth(inputs); // send the data to the AuthContext component for validation
-      navigate('/'); // if successful, navigate to the home page
-    } catch (err) {
-      console.error(err);
-      setErr(err.response.data);
-    }
-  }
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault(); // override the default behaviour when submitting a form
+  //   try {
+  //     await auth(inputs); // send the data to the AuthContext component for validation
+  //     navigate('/'); // if successful, navigate to the home page
+  //   } catch (err) {
+  //     console.error(err);
+  //     setErr(err.response.data);
+  //   }
+  // }
 
 
   return (
@@ -41,7 +41,8 @@ function Login() {
         <form>
             <input type="text" placeholder="Email or Username" name="login" required onChange={handleChange} />
             <input type="password" placeholder="Password" name="password" required onChange={handleChange}/>
-            <button onClick={handleSubmit}>Login</button>
+            {/* <button onClick={handleSubmit}>Login</button> */}
+            <button>Login</button>
             {err && <p>{err}</p>} {/*if there is an error, create a <p> tag showing the error to the user*/}
             <span>No account? <Link to="/register">Register</Link> </span>
         </form>

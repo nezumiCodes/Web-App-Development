@@ -17,7 +17,11 @@ function NavBar() {
                         <h6>New Task</h6>
                     </Link>
                     <span>User's Name</span>
-                    <span>Logout</span>
+                    <span>
+                        <Link to={'/login'} className='link'>
+                            Logout
+                        </Link>
+                    </span>
                 </div>
             </div>
         </div>

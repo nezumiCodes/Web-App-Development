@@ -38,6 +38,10 @@
                         font-size: 14px;
                         cursor: pointer;
                     }
+
+                    .link {
+                        text-decoration: none;
+                    }
                 }
             }
 
@@ -90,8 +94,8 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background-color: rgb(218, 214, 207);
-            height: 40vh;
+            background-color: rgb(154, 221, 238);
+            height: 100vh;
 
             form {
                 display: flex;
@@ -103,14 +107,14 @@
 
                 input {
                     border: none;
-                    border-bottom: 1px solid rgb(189, 146, 78);
+                    border-bottom: 1px solid rgb(78, 130, 189);
                     padding: 10px;
                 }
 
                 button {
                     padding: 10px;
                     border: none;
-                    background-color: rgb(189, 146, 78);
+                    background-color: rgb(78, 130, 189);
                     color: white;
                     cursor: pointer;
                 }
@@ -123,7 +127,7 @@
 
             h1 {
                 font-size: 20px;
-                color: rgb(189, 146, 78);
+                color: rgb(78, 130, 189);
                 margin-bottom: 20px; 
             }
         }
