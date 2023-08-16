@@ -64,5 +64,15 @@ After creating the routes, they need to be imported within the main server file 
 
 <hr>
 
+### Create the database file: 
+- Within the `config` folder, create a `database.js` file.
+- If using `Sqlite3`:
+  - Install the `sqlite3` package, in the terminal: `npm install sqlite3`
+  - Import the package within the `database.js` file
+  - Create a new database: `const db = new sqlite3.Database("db_name")`, where `db_name` is the name of the database.
+  - Use the `.serialize()` method to create the necessary tables and initial data. This is important because the `sqlite3` package can handle multiple simultaneous requests, and the `serialize()` method ensures that all necessary actions have been performed before interacting with the database. 
+  - Export the connection, f.e. `module.exports = db`.
+<hr>
+
 ### Running the server: 
 - In the terminal: `npm start` to run a live server
