@@ -9,29 +9,25 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
 
 // Render markers and their popups from the database
-fetch('/')
-.then(response => response.json())
+fetch('/locations') // Use the correct endpoint for fetching locations
+.then(response => {
+    if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.status}`);
+    }
+    return response.json();
+})
 .then(locations => {
+    console.log('Fetched locations:', locations);
     locations.forEach(location => {
         const marker = L.marker([location.lat, location.lng]);
-        marker.bindPopup(location.name, location.desc);
+        marker.addTo(map);
+        marker.bindPopup(`<b>${location.name}</b><br>${location.desc}`);
     });
 })
 .catch(err => {
     console.log('Error fetching location data: ', err);
 });
 
-// Generate a marker with a popup and on-click popups on the map
-// let marker = L.marker([51.505, -0.09]).addTo(map);
-// marker.bindPopup('Example');
-
-// let popup = L.popup();
-
-// map.on('click', (e) => {
-//     popup.setLatLng(e.latlng)
-//             .setContent('You clicked on the map! ' + e.latlng.toString())
-//             .openOn(map);
-// });
 
 map.on('click', (e) => {
     let popup = L.popup()
@@ -42,36 +38,44 @@ map.on('click', (e) => {
                         <input type="text" name="loc-name" id="loc-name" required />
                         <label for="loc-desc">Description: </label>
                         <input type="text" name="loc-desc" id="loc-desc" />
-                        <button type="button" id="loc-submit">Submit</button>
+                        <button type="submit" id="loc-submit">Submit</button>
                     </form>
                  `)
                  .openOn(map);
 
     // Create an event listener to handle the popup form submission
-    document.getElementById('loc-submit').addEventListener('click', () => {
+    document.getElementById('popup-form').addEventListener('submit', async (e) => {
         const locName = document.getElementById('loc-name').value;
         const locDesc = document.getElementById('loc-desc').value;
         const lat = e.latlng.lat;
         const lng = e.latlng.lng;
 
-        console.log(locName, locDesc);
+        const marker = L.marker([lat, lng]).addTo(map);
+        marker.bindPopup(`<b>${locName}</b><br>${locDesc}`).openPopup();
+
+        // Close the popup form window after the submission
+        map.closePopup(popup);
 
         // AJAX --> fetch --> contact the '/' endpoint in order to POST the client data and 
         // store them in the database
-        fetch("/", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }, 
-            body: JSON.stringify({lat, lng, locName, locDesc})
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data.message);
-        })
-        .catch(err => {
+        try{
+            const response = await fetch("/", {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }, 
+                            body: JSON.stringify({lat, lng, locName, locDesc})
+                        })
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data.message);
+            } else {
+                console.error('Error saving location to the database');
+            }
+        } catch(err) {
             console.error(err);
-        });
+        }
+        
 
         // Close the popup form window after the submission
         map.closePopup(popup);
